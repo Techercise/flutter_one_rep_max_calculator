@@ -6,14 +6,15 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_one_rep_max_calculator/calculator.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_one_rep_max_calculator/main.dart';
+// import 'package:flutter_one_rep_max_calculator/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const Calculator());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
