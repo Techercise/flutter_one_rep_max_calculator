@@ -81,7 +81,7 @@ class _CalculatorState extends State<Calculator> {
                             fontFamily: 'sans-serif-smallcaps', fontSize: 24),
                       ),
                       SizedBox(
-                        width: 50,
+                        width: 40,
                         child: TextField(
                           obscureText: false,
                           decoration:
@@ -104,7 +104,7 @@ class _CalculatorState extends State<Calculator> {
                       ),
                     ),
                     SizedBox(
-                      width: 50,
+                      width: 40,
                       child: TextField(
                         obscureText: false,
                         decoration:
@@ -120,10 +120,11 @@ class _CalculatorState extends State<Calculator> {
             Expanded(
                 child: SizedBox(
               width: safeWidth,
-              height: 100,
+              height: 120,
             )),
             OverflowBar(
               alignment: MainAxisAlignment.spaceEvenly,
+              overflowAlignment: OverflowBarAlignment.center,
               children: <Widget>[
                 TextButton(
                   onPressed: _calculateProjectedOneRepMax,
@@ -157,32 +158,32 @@ class _CalculatorState extends State<Calculator> {
 
     weightLifted = int.parse(weightFieldText.text);
     repsPerformed = int.parse(repsFieldText.text);
-    // Epley Formula
-    final epleyORM = (weightLifted * (1 + repsPerformed / 30));
+    // Epley Formula checked math works as expected
+    double epleyORM = weightLifted * (1 + (repsPerformed / 30));
 
-    // Brzycki Formula
-    final brzyckiORM = weightLifted * (36 / (37 - repsPerformed));
+    // Brzycki Formula checked math works as expected
+    double brzyckiORM = weightLifted * (36 / (37 - repsPerformed));
 
-    // McGlothlin Formula
-    final mcGlothlinORM =
-        (100 * weightLifted) / (101.3 - (2.67123 - repsPerformed));
+    // Landers Formula checked math works as expected
+    double landersORM =
+        weightLifted / (1.013 - (0.0267123 * repsPerformed));
 
-    // Lombardi Formula
-    final lombardiORM = weightLifted * pow(repsPerformed, 0.1);
+    // Lombardi Formula checked math works as expected
+    num lombardiORM = weightLifted * pow(repsPerformed, 0.1);
 
-    // Mayhew Formula
-    final mayhewORM = (100 * weightLifted) /
-        (52.2 + (41.9 * pow(e, (-0.055 * repsPerformed))));
+    // Mayhew Formula checked with wolfram
+    double mayhewORM = weightLifted /
+        (0.522 + (0.419 * pow(e, (-0.055 * repsPerformed))));
 
-    // O'Conner Formula
-    final oconnerORM = weightLifted * (1 + (repsPerformed / 40));
+    // O'Conner Formula checked with wolfram
+    double oconnerORM = weightLifted * (1 + (0.025 * repsPerformed));
 
-    // Wathan Formula
-    final wathanORM = (100 * weightLifted) /
-        (48.8 + (pow((53.8 * e), (-0.075 * repsPerformed))));
+    // Wathen Formula
+    double wathenORM = weightLifted /
+        (0.4880 + (0.538 * (pow(e, (-0.075 * repsPerformed)))));
 
-    final avgORM = [epleyORM, brzyckiORM, mcGlothlinORM, lombardiORM,
-        mayhewORM, oconnerORM, wathanORM].average;
+    double avgORM = [epleyORM, brzyckiORM, landersORM, lombardiORM,
+        mayhewORM, oconnerORM, wathenORM].average;
 
     projectedORM = avgORM.round().toString();
   }
