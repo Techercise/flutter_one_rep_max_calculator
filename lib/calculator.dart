@@ -158,24 +158,25 @@ class _CalculatorState extends State<Calculator> {
 
     weightLifted = int.parse(weightFieldText.text);
     repsPerformed = int.parse(repsFieldText.text);
-    // Epley Formula checked math works as expected
+
+    // Epley Formula
     double epleyORM = weightLifted * (1 + (repsPerformed / 30));
 
-    // Brzycki Formula checked math works as expected
+    // Brzycki Formula
     double brzyckiORM = weightLifted * (36 / (37 - repsPerformed));
 
-    // Landers Formula checked math works as expected
+    // Landers Formula
     double landersORM =
         weightLifted / (1.013 - (0.0267123 * repsPerformed));
 
-    // Lombardi Formula checked math works as expected
+    // Lombardi Formula
     num lombardiORM = weightLifted * pow(repsPerformed, 0.1);
 
-    // Mayhew Formula checked with wolfram
+    // Mayhew Formula
     double mayhewORM = weightLifted /
         (0.522 + (0.419 * pow(e, (-0.055 * repsPerformed))));
 
-    // O'Conner Formula checked with wolfram
+    // O'Conner Formula
     double oconnerORM = weightLifted * (1 + (0.025 * repsPerformed));
 
     // Wathen Formula
