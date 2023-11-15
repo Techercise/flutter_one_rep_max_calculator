@@ -61,7 +61,7 @@ class _CalculatorState extends State<Calculator> {
               child: Visibility(
                 visible: _clicked,
                 child: Text(
-                  '$projectedORM lbs.',
+                  projectedORM,
                   style: const TextStyle(
                       fontSize: 48.0,
                       color: Color(0xff00c853),
@@ -93,7 +93,7 @@ class _CalculatorState extends State<Calculator> {
                         ),
                       ),
                     ]),
-                Column(
+                Column( // NEED TO FIX OVERFLOW ISSUE
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -159,43 +159,51 @@ class _CalculatorState extends State<Calculator> {
       _clicked = true;
     });
 
-    weightLifted = int.parse(weightFieldText.text);
-    repsPerformed = int.parse(repsFieldText.text);
+    if((weightFieldText.text == '') && (repsFieldText.text == ''))
+    {
+      projectedORM = 'Enter reps and weight!';
+    }
+    else
+    {
+      weightLifted = int.parse(weightFieldText.text);
+      repsPerformed = int.parse(repsFieldText.text);
 
-    // Epley Formula
-    double epleyORM = weightLifted * (1 + (repsPerformed / 30));
+      // Epley Formula
+      double epleyORM = weightLifted * (1 + (repsPerformed / 30));
 
-    // Brzycki Formula
-    double brzyckiORM = weightLifted * (36 / (37 - repsPerformed));
+      // Brzycki Formula
+      double brzyckiORM = weightLifted * (36 / (37 - repsPerformed));
 
-    // Landers Formula
-    double landersORM = weightLifted / (1.013 - (0.0267123 * repsPerformed));
+      // Landers Formula
+      double landersORM = weightLifted / (1.013 - (0.0267123 * repsPerformed));
 
-    // Lombardi Formula
-    num lombardiORM = weightLifted * pow(repsPerformed, 0.1);
+      // Lombardi Formula
+      num lombardiORM = weightLifted * pow(repsPerformed, 0.1);
 
-    // Mayhew Formula
-    double mayhewORM =
-        weightLifted / (0.522 + (0.419 * pow(e, (-0.055 * repsPerformed))));
+      // Mayhew Formula
+      double mayhewORM =
+          weightLifted / (0.522 + (0.419 * pow(e, (-0.055 * repsPerformed))));
 
-    // O'Conner Formula
-    double oconnerORM = weightLifted * (1 + (0.025 * repsPerformed));
+      // O'Conner Formula
+      double oconnerORM = weightLifted * (1 + (0.025 * repsPerformed));
 
-    // Wathen Formula
-    double wathenORM =
-        weightLifted / (0.4880 + (0.538 * (pow(e, (-0.075 * repsPerformed)))));
+      // Wathen Formula
+      double wathenORM =
+          weightLifted /
+              (0.4880 + (0.538 * (pow(e, (-0.075 * repsPerformed)))));
 
-    double avgORM = [
-      epleyORM,
-      brzyckiORM,
-      landersORM,
-      lombardiORM,
-      mayhewORM,
-      oconnerORM,
-      wathenORM
-    ].average;
+      double avgORM = [
+        epleyORM,
+        brzyckiORM,
+        landersORM,
+        lombardiORM,
+        mayhewORM,
+        oconnerORM,
+        wathenORM
+      ].average;
 
-    projectedORM = avgORM.round().toString();
+      projectedORM = '${avgORM.round()} lbs.';
+    }
   }
 
   void clearAllInputs() {
