@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 
 class Calculator extends StatefulWidget {
+
   const Calculator({super.key});
 
   @override
@@ -10,7 +11,6 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-
   bool _clicked = false;
 
   int weightLifted = 0;
@@ -31,7 +31,9 @@ class _CalculatorState extends State<Calculator> {
 
     return Container(
         color: Colors.white,
-        child: ListView(
+        height: safeHeight,
+        width: safeWidth,
+        child: Column(
           children: [
             Container(
                 color: Colors.white,
@@ -44,7 +46,8 @@ class _CalculatorState extends State<Calculator> {
                       fontWeight: FontWeight.w400,
                       fontFamily: 'sans-serif-smallcaps'),
                   textAlign: TextAlign.center,
-                )),
+                )
+            ),
             Container(
               height: 1,
               width: safeWidth,
@@ -57,17 +60,16 @@ class _CalculatorState extends State<Calculator> {
               alignment: AlignmentDirectional.center,
               child: Visibility(
                 visible: _clicked,
-                child:
-                  Text(
-                  projectedORM,
+                child: Text(
+                  '$projectedORM lbs.',
                   style: const TextStyle(
                       fontSize: 48.0,
                       color: Color(0xff00c853),
                       fontWeight: FontWeight.bold),
-                  ),
+                ),
               ),
             ),
-             Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
@@ -84,14 +86,14 @@ class _CalculatorState extends State<Calculator> {
                         width: 40,
                         child: TextField(
                           obscureText: false,
-                          decoration:
-                              const InputDecoration(border: UnderlineInputBorder()),
+                          decoration: const InputDecoration(
+                              border: UnderlineInputBorder()),
                           keyboardType: TextInputType.number,
                           controller: weightFieldText,
                         ),
                       ),
                     ]),
-                 Column(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -107,8 +109,8 @@ class _CalculatorState extends State<Calculator> {
                       width: 40,
                       child: TextField(
                         obscureText: false,
-                        decoration:
-                            const InputDecoration(border: UnderlineInputBorder()),
+                        decoration: const InputDecoration(
+                            border: UnderlineInputBorder()),
                         keyboardType: TextInputType.number,
                         controller: repsFieldText,
                       ),
@@ -117,32 +119,34 @@ class _CalculatorState extends State<Calculator> {
                 )
               ],
             ),
-            Expanded(
-                child: SizedBox(
-              width: safeWidth,
-              height: 120,
-            )),
+            const Spacer(),
             OverflowBar(
-              alignment: MainAxisAlignment.spaceEvenly,
+              alignment: MainAxisAlignment.spaceBetween,
               overflowAlignment: OverflowBarAlignment.center,
               children: <Widget>[
-                TextButton(
-                  onPressed: _calculateProjectedOneRepMax,
-                  style: TextButton.styleFrom(
-                      foregroundColor: const Color(0xff00c853),
-                      padding: const EdgeInsets.all(16.0),
-                      textStyle: const TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold)),
-                  child: const Text('SUBMIT'),
-                ),
-                TextButton(
-                    onPressed: _clearAllInputs,
+                SizedBox(
+                  width: safeWidth / 2,
+                  child: TextButton(
+                    onPressed: calculateProjectedOneRepMax,
                     style: TextButton.styleFrom(
-                        foregroundColor: Colors.red,
+                        foregroundColor: const Color(0xff00c853),
                         padding: const EdgeInsets.all(16.0),
                         textStyle: const TextStyle(
                             fontSize: 18.0, fontWeight: FontWeight.bold)),
-                    child: const Text('CLEAR'))
+                    child: const Text('SUBMIT'),
+                  ),
+                ),
+                SizedBox(
+                  width: safeWidth / 2,
+                  child: TextButton(
+                      onPressed: clearAllInputs,
+                      style: TextButton.styleFrom(
+                          foregroundColor: Colors.red,
+                          padding: const EdgeInsets.all(16.0),
+                          textStyle: const TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.bold)),
+                      child: const Text('CLEAR')),
+                )
               ],
             ),
           ],
@@ -150,8 +154,7 @@ class _CalculatorState extends State<Calculator> {
     );
   }
 
-  void _calculateProjectedOneRepMax() {
-
+  void calculateProjectedOneRepMax() {
     setState(() {
       _clicked = true;
     });
@@ -166,34 +169,40 @@ class _CalculatorState extends State<Calculator> {
     double brzyckiORM = weightLifted * (36 / (37 - repsPerformed));
 
     // Landers Formula
-    double landersORM =
-        weightLifted / (1.013 - (0.0267123 * repsPerformed));
+    double landersORM = weightLifted / (1.013 - (0.0267123 * repsPerformed));
 
     // Lombardi Formula
     num lombardiORM = weightLifted * pow(repsPerformed, 0.1);
 
     // Mayhew Formula
-    double mayhewORM = weightLifted /
-        (0.522 + (0.419 * pow(e, (-0.055 * repsPerformed))));
+    double mayhewORM =
+        weightLifted / (0.522 + (0.419 * pow(e, (-0.055 * repsPerformed))));
 
     // O'Conner Formula
     double oconnerORM = weightLifted * (1 + (0.025 * repsPerformed));
 
     // Wathen Formula
-    double wathenORM = weightLifted /
-        (0.4880 + (0.538 * (pow(e, (-0.075 * repsPerformed)))));
+    double wathenORM =
+        weightLifted / (0.4880 + (0.538 * (pow(e, (-0.075 * repsPerformed)))));
 
-    double avgORM = [epleyORM, brzyckiORM, landersORM, lombardiORM,
-        mayhewORM, oconnerORM, wathenORM].average;
+    double avgORM = [
+      epleyORM,
+      brzyckiORM,
+      landersORM,
+      lombardiORM,
+      mayhewORM,
+      oconnerORM,
+      wathenORM
+    ].average;
 
     projectedORM = avgORM.round().toString();
   }
 
-  void _clearAllInputs()
-  {
+  void clearAllInputs() {
     setState(() {
       _clicked = false;
     });
+
     repsPerformed = 0;
     weightLifted = 0;
     projectedORM = '';

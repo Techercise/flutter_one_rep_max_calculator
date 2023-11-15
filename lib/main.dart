@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_one_rep_max_calculator/calculator.dart';
+import 'package:flutter_one_rep_max_calculator/calculator.dart' as calc;
 
 void main() {
+
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: Scaffold(
@@ -14,7 +17,15 @@ void main() {
           onPressed: () {},
         ),
       ),
-      body: const Calculator()
+      body: const calc.Calculator(),
+      bottomNavigationBar: const BottomAppBar(
+        elevation: 0,
+        color: Colors.transparent,
+        child: OverflowBar(
+          alignment: MainAxisAlignment.spaceBetween,
+          overflowAlignment: OverflowBarAlignment.center,
+        ),
+      ),
     ),
   ));
 }
