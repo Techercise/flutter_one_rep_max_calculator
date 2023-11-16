@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 
 class Calculator extends StatefulWidget {
-
   const Calculator({super.key});
 
   @override
@@ -35,91 +34,97 @@ class _CalculatorState extends State<Calculator> {
         width: safeWidth,
         child: Column(
           children: [
-            Container(
-                color: Colors.white,
-                alignment: AlignmentDirectional.topCenter,
-                child: const Text(
-                  'Projected\n One Rep Max',
-                  style: TextStyle(
-                      fontSize: 48.0,
-                      color: Color(0xffEEFF41),
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'sans-serif-smallcaps'),
-                  textAlign: TextAlign.center,
-                )
-            ),
-            Container(
-              height: 1,
-              width: safeWidth,
-              margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-              color: const Color(0xff5A5A5A),
-            ),
-            Container(
-              margin: const EdgeInsets.all(24.0),
-              height: safeHeight / 5,
-              alignment: AlignmentDirectional.center,
-              child: Visibility(
-                visible: _clicked,
-                child: Text(
-                  projectedORM,
-                  style: const TextStyle(
-                      fontSize: 48.0,
-                      color: Color(0xff00c853),
-                      fontWeight: FontWeight.bold),
-                ),
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  Container(
+                      color: Colors.white,
+                      alignment: AlignmentDirectional.topCenter,
+                      child: const Text(
+                        'Projected\n One Rep Max',
+                        style: TextStyle(
+                            fontSize: 48.0,
+                            color: Color(0xffEEFF41),
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'sans-serif-smallcaps'),
+                        textAlign: TextAlign.center,
+                      )),
+                  Container(
+                    height: 1,
+                    width: safeWidth,
+                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    color: const Color(0xff5A5A5A),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(24.0),
+                    height: safeHeight / 5,
+                    alignment: AlignmentDirectional.center,
+                    child: Visibility(
+                      visible: _clicked,
+                      child: Text(
+                        projectedORM,
+                        style: const TextStyle(
+                            fontSize: 48.0,
+                            color: Color(0xff00c853),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Weight\nLifted',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily: 'sans-serif-smallcaps',
+                                  fontSize: 24),
+                            ),
+                            SizedBox(
+                              width: 40,
+                              child: TextField(
+                                obscureText: false,
+                                decoration: const InputDecoration(
+                                    border: UnderlineInputBorder()),
+                                keyboardType: TextInputType.number,
+                                controller: weightFieldText,
+                              ),
+                            ),
+                          ]),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Reps\nAchieved',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'sans-serif-smallcaps',
+                              fontSize: 24,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 40,
+                            child: TextField(
+                              obscureText: false,
+                              decoration: const InputDecoration(
+                                  border: UnderlineInputBorder()),
+                              keyboardType: TextInputType.number,
+                              controller: repsFieldText,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Weight\nLifted',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: 'sans-serif-smallcaps', fontSize: 24),
-                      ),
-                      SizedBox(
-                        width: 40,
-                        child: TextField(
-                          obscureText: false,
-                          decoration: const InputDecoration(
-                              border: UnderlineInputBorder()),
-                          keyboardType: TextInputType.number,
-                          controller: weightFieldText,
-                        ),
-                      ),
-                    ]),
-                Column( // NEED TO FIX OVERFLOW ISSUE
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Reps\nAchieved',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'sans-serif-smallcaps',
-                        fontSize: 24,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 40,
-                      child: TextField(
-                        obscureText: false,
-                        decoration: const InputDecoration(
-                            border: UnderlineInputBorder()),
-                        keyboardType: TextInputType.number,
-                        controller: repsFieldText,
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            const Spacer(),
             OverflowBar(
               alignment: MainAxisAlignment.spaceBetween,
               overflowAlignment: OverflowBarAlignment.center,
@@ -150,8 +155,7 @@ class _CalculatorState extends State<Calculator> {
               ],
             ),
           ],
-        )
-    );
+        ));
   }
 
   void calculateProjectedOneRepMax() {
@@ -159,12 +163,47 @@ class _CalculatorState extends State<Calculator> {
       _clicked = true;
     });
 
-    if((weightFieldText.text == '') && (repsFieldText.text == ''))
-    {
-      projectedORM = 'Enter reps and weight!';
+    if ((weightFieldText.text == '') && (repsFieldText.text == '')) {
+      final scaffold = ScaffoldMessenger.of(context);
+      scaffold.showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: const Text('Enter reps and weight to get a projected max'),
+        action: SnackBarAction(
+          textColor: Colors.white,
+          label: 'OK',
+          onPressed: scaffold.hideCurrentSnackBar,
+        ),
+      ));
+      _clicked = false;
     }
-    else
-    {
+    else if (weightFieldText.text == '' && (repsFieldText.text != '')) {
+      final scaffold = ScaffoldMessenger.of(context);
+      scaffold.showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: const Text('Enter weight to get a projected one rep max'),
+        action: SnackBarAction(
+          textColor: Colors.white,
+          label: 'OK',
+          onPressed: scaffold.hideCurrentSnackBar,
+        ),
+      ));
+      _clicked = false;
+    }
+    else if (weightFieldText.text != '' && (repsFieldText.text == ''))
+      {
+        final scaffold = ScaffoldMessenger.of(context);
+        scaffold.showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: const Text('Enter reps to get a projected one rep max'),
+          action: SnackBarAction(
+            textColor: Colors.white,
+            label: 'OK',
+            onPressed: scaffold.hideCurrentSnackBar,
+          ),
+        ));
+        _clicked = false;
+      }
+    else {
       weightLifted = int.parse(weightFieldText.text);
       repsPerformed = int.parse(repsFieldText.text);
 
@@ -188,9 +227,8 @@ class _CalculatorState extends State<Calculator> {
       double oconnerORM = weightLifted * (1 + (0.025 * repsPerformed));
 
       // Wathen Formula
-      double wathenORM =
-          weightLifted /
-              (0.4880 + (0.538 * (pow(e, (-0.075 * repsPerformed)))));
+      double wathenORM = weightLifted /
+          (0.4880 + (0.538 * (pow(e, (-0.075 * repsPerformed)))));
 
       double avgORM = [
         epleyORM,
