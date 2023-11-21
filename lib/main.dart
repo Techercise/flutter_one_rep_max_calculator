@@ -32,16 +32,17 @@ void main() {
           padding: EdgeInsets.zero,
           children: const [
             SizedBox(
-              height: 40.0,
+              height: 60.0,
               child: DrawerHeader(
-                padding: EdgeInsets.zero,
+                padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
                 margin: EdgeInsets.zero,
-                child: Text('Settings Menu'),
+                child: Text('Settings Menu', style: TextStyle(fontSize: 18.0),),
               ),
             ),
             ListTile(
               title: Text('View Privacy Policy'),
               onTap: _launchURL,
+              leading: Icon(Icons.open_in_browser_rounded),
             )
           ],
         )
