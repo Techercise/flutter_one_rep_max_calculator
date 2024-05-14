@@ -28,6 +28,8 @@ class _CalculatorState extends State<Calculator> {
     double safeHeight = height - padding.top - padding.bottom;
     double safeWidth = width - padding.left - padding.right;
 
+
+
     return Container(
         color: Colors.white,
         height: safeHeight,
