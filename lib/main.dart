@@ -3,21 +3,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_one_rep_max_calculator/calculator.dart' as calc;
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_one_rep_max_calculator/calculationSettings.dart' as calcSettings;
+import 'package:flutter_one_rep_max_calculator/calculationSettings.dart' as settings;
 
 // final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
 
-  runApp(OneRepMaxCalculator());
+  runApp(const OneRepMaxCalculator());
 }
 
 class OneRepMaxCalculator extends StatelessWidget {
+  const OneRepMaxCalculator({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: InitScreen());
+  }
+}
+
+class InitScreen extends StatelessWidget {
+  const InitScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+      return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xff00c853),
           title: const Text('One Rep Max Calculator'),
@@ -46,7 +57,7 @@ class OneRepMaxCalculator extends StatelessWidget {
                 ListTile(
                   title: const Text('Settings'),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => calcSettings.CalculationSettings()),);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const settings.CalculationSettings()));
                   },
                   leading: const Icon(Icons.settings),
                 ),
@@ -58,8 +69,7 @@ class OneRepMaxCalculator extends StatelessWidget {
               ],
             )
         ),
-      ),
-    );
+      );
   }
 }
 
