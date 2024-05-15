@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:collection/collection.dart';
+import 'package:flutter_one_rep_max_calculator/globals.dart' as globals;
 
 class Calculator extends StatefulWidget {
   const Calculator({super.key});
@@ -27,8 +28,6 @@ class _CalculatorState extends State<Calculator> {
     EdgeInsets padding = MediaQuery.of(context).padding;
     double safeHeight = height - padding.top - padding.bottom;
     double safeWidth = width - padding.left - padding.right;
-
-
 
     return Container(
         color: Colors.white,
@@ -242,7 +241,14 @@ class _CalculatorState extends State<Calculator> {
         wathenORM
       ].average;
 
-      projectedORM = '${avgORM.round()} lbs.';
+      if (globals.kg_unit_of_measure == true)
+        {
+          projectedORM = '${avgORM.round()} kgs.';
+        }
+      else
+        {
+          projectedORM = '${avgORM.round()} lbs.';
+        }
     }
   }
 

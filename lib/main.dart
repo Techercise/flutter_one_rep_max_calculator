@@ -3,9 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_one_rep_max_calculator/calculator.dart' as calc;
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_one_rep_max_calculator/calculationSettings.dart' as settings;
-
-// final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+import 'package:flutter_one_rep_max_calculator/appSettings.dart' as settings;
 
 void main() {
 
@@ -57,7 +55,7 @@ class InitScreen extends StatelessWidget {
                 ListTile(
                   title: const Text('Settings'),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const settings.CalculationSettings()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const settings.AppSettings(kg_uom: true,)));
                   },
                   leading: const Icon(Icons.settings),
                 ),

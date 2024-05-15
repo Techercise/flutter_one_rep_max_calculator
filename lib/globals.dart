@@ -1,0 +1,1 @@
+bool kg_unit_of_measure = false;
