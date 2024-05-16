@@ -45,11 +45,11 @@ class InitScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               children:  [
                 const SizedBox(
-                  height: 60.0,
+                  height: 100.0,
                   child: DrawerHeader(
                     padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
                     margin: EdgeInsets.zero,
-                    child: Text('Help', style: TextStyle(fontSize: 18.0),),
+                    child: Text('Help', style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),),
                   ),
                 ),
                 ListTile(

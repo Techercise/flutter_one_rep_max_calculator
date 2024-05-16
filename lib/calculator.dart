@@ -205,50 +205,7 @@ class _CalculatorState extends State<Calculator> {
         _clicked = false;
       }
     else {
-      weightLifted = int.parse(weightFieldText.text);
-      repsPerformed = int.parse(repsFieldText.text);
-
-      // Epley Formula
-      double epleyORM = weightLifted * (1 + (repsPerformed / 30));
-
-      // Brzycki Formula
-      double brzyckiORM = weightLifted * (36 / (37 - repsPerformed));
-
-      // Landers Formula
-      double landersORM = weightLifted / (1.013 - (0.0267123 * repsPerformed));
-
-      // Lombardi Formula
-      num lombardiORM = weightLifted * pow(repsPerformed, 0.1);
-
-      // Mayhew Formula
-      double mayhewORM =
-          weightLifted / (0.522 + (0.419 * pow(e, (-0.055 * repsPerformed))));
-
-      // O'Conner Formula
-      double oconnerORM = weightLifted * (1 + (0.025 * repsPerformed));
-
-      // Wathen Formula
-      double wathenORM = weightLifted /
-          (0.4880 + (0.538 * (pow(e, (-0.075 * repsPerformed)))));
-
-      double avgORM = [
-        epleyORM,
-        brzyckiORM,
-        landersORM,
-        lombardiORM,
-        mayhewORM,
-        oconnerORM,
-        wathenORM
-      ].average;
-
-      if (globals.kg_unit_of_measure == true)
-        {
-          projectedORM = '${avgORM.round()} kgs.';
-        }
-      else
-        {
-          projectedORM = '${avgORM.round()} lbs.';
-        }
+      averageORMCalculation();
     }
   }
 
@@ -262,5 +219,83 @@ class _CalculatorState extends State<Calculator> {
     projectedORM = '';
     weightFieldText.clear();
     repsFieldText.clear();
+  }
+
+  String averageORMCalculation()
+  {
+    projectedORM = '';
+    List ORMFormulasUsed = [];
+    weightLifted = int.parse(weightFieldText.text);
+    repsPerformed = int.parse(repsFieldText.text);
+
+    if (globals.epley_formula_on)
+    {
+      // Epley Formula
+      double epleyORM = weightLifted * (1 + (repsPerformed / 30));
+      ORMFormulasUsed.add(epleyORM);
+    }
+
+    if (globals.brzycki_formula_on)
+    {
+      // Brzycki Formula
+      double brzyckiORM = weightLifted * (36 / (37 - repsPerformed));
+      ORMFormulasUsed.add(brzyckiORM);
+    }
+
+    if (globals.landers_formula_on)
+    {
+      // Landers Formula
+      double landersORM = weightLifted / (1.013 - (0.0267123 * repsPerformed));
+      ORMFormulasUsed.add(landersORM);
+    }
+
+    if (globals.lombardi_formula_on)
+    {
+      // Lombardi Formula
+      num lombardiORM = weightLifted * pow(repsPerformed, 0.1);
+      ORMFormulasUsed.add(lombardiORM);
+    }
+
+    if (globals.mayhew_formula_on)
+    {
+      // Mayhew Formula
+      double mayhewORM =
+          weightLifted / (0.522 + (0.419 * pow(e, (-0.055 * repsPerformed))));
+      ORMFormulasUsed.add(mayhewORM);
+    }
+
+    if (globals.oconner_formula_on)
+    {
+      // O'Conner Formula
+      double oconnerORM = weightLifted * (1 + (0.025 * repsPerformed));
+      ORMFormulasUsed.add(oconnerORM);
+    }
+
+    if (globals.wathen_formula_on)
+    {
+      // Wathen Formula
+      double wathenORM = weightLifted /
+          (0.4880 + (0.538 * (pow(e, (-0.075 * repsPerformed)))));
+      ORMFormulasUsed.add(wathenORM);
+    }
+
+    double avgORM = 0;
+
+    for(int i = 0; i > ORMFormulasUsed.length; i++)
+      {
+        avgORM = avgORM + ORMFormulasUsed[i];
+      }
+
+    avgORM /= ORMFormulasUsed.length;
+
+    if (globals.kg_unit_of_measure == true)
+    {
+      projectedORM = '${avgORM.round()} kgs.';
+    }
+    else
+    {
+      projectedORM = '${avgORM.round()} lbs.';
+    }
+    return projectedORM;
   }
 }
