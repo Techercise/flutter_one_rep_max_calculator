@@ -281,7 +281,7 @@ class _CalculatorState extends State<Calculator> {
 
     double avgORM = 0;
 
-    for(int i = 0; i > ORMFormulasUsed.length; i++)
+    for(int i = 0; i < ORMFormulasUsed.length; i++)
       {
         avgORM = avgORM + ORMFormulasUsed[i];
       }
