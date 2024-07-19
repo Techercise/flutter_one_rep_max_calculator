@@ -91,7 +91,16 @@ class _CalculatorState extends State<Calculator> {
                               child: TextField(
                                 obscureText: false,
                                 decoration: const InputDecoration(
-                                    border: UnderlineInputBorder()),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Color(0xff5A5A5A))
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Color(0xff5A5A5A))
+                                  ),
+                                  border: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Color(0xff5A5A5A))
+                                  )
+                                ),
                                 keyboardType: TextInputType.number,
                                 controller: weightFieldText,
                               ),
