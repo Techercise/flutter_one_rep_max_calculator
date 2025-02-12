@@ -3,10 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_one_rep_max_calculator/calculator.dart' as calc;
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_one_rep_max_calculator/appSettings.dart' as settings;
+import 'package:flutter_one_rep_max_calculator/app_settings.dart' as settings;
 
 void main() {
-
   runApp(const OneRepMaxCalculator());
 }
 
@@ -47,7 +46,7 @@ class InitScreen extends StatelessWidget {
                 ListTile(
                   title: const Text('Settings'),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const settings.AppSettings(kg_uom: true,)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const settings.AppSettings()));
                   },
                   leading: const Icon(Icons.settings),
                 ),

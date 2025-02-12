@@ -1,16 +1,37 @@
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_one_rep_max_calculator/globals.dart' as globals;
 
 class AppSettings extends StatefulWidget {
-  final bool kgUOM;
-  const AppSettings({super.key, required this.kgUOM});
+  const AppSettings({super.key});
 
   @override
   State<AppSettings> createState() => _AppSettingsState();
 }
 
 class _AppSettingsState extends State<AppSettings> {
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPreferences();
+  }
+
+  Future<void> _loadPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      globals.kg_unit_of_measure = prefs.getBool('globals.kg_unit_of_measure') ?? false;
+    });
+  }
+
+  Future<void> _updatePreferences(String key, bool value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(key, value);
+    setState(() {
+      globals.kg_unit_of_measure = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +45,9 @@ class _AppSettingsState extends State<AppSettings> {
         children: [
           SwitchListTile(
             title: const Text('Use Kilograms as Unit of Measure'),
-            onChanged: (bool value) {
+            onChanged: (value) {
               setState(() {
-                globals.kg_unit_of_measure = value;
+                _updatePreferences('globals.kg_unit_of_measure', value);
               });
             },
             value: globals.kg_unit_of_measure,
