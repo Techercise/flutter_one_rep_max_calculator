@@ -22,6 +22,13 @@ class _AppSettingsState extends State<AppSettings> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       globals.kg_unit_of_measure = prefs.getBool('globals.kg_unit_of_measure') ?? false;
+      globals.epley_formula_on = prefs.getBool('globals.epley_formula_on') ?? true;
+      globals.brzycki_formula_on = prefs.getBool('globals.brzycki_formula_on') ?? true;
+      globals.landers_formula_on = prefs.getBool('globals.landers_formula_on') ?? true;
+      globals.lombardi_formula_on = prefs.getBool('globals.lombardi_formula_on') ?? true;
+      globals.mayhew_formula_on = prefs.getBool('globals.mayhew_formula_on') ?? true;
+      globals.oconner_formula_on = prefs.getBool('globals.oconner_formula_on') ?? true;
+      globals.wathen_formula_on = prefs.getBool('globals.wathen_formula_on') ?? true;
     });
   }
 
@@ -29,7 +36,30 @@ class _AppSettingsState extends State<AppSettings> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(key, value);
     setState(() {
-      globals.kg_unit_of_measure = value;
+      if (key == 'globals.kg_unit_of_measure') {
+        globals.kg_unit_of_measure = value;
+      }
+      else if (key == 'globals.epley_formula_on') {
+        globals.epley_formula_on = value;
+      }
+      else if(key == 'globals.brzycki_formula_on') {
+        globals.brzycki_formula_on = value;
+      }
+      else if(key == 'globals.landers_formula_on') {
+        globals.landers_formula_on = value;
+      }
+      else if(key == 'globals.lombardi_formula_on') {
+        globals.lombardi_formula_on = value;
+      }
+      else if(key == 'globals.mayhew_formula_on') {
+        globals.mayhew_formula_on = value;
+      }
+      else if(key == 'globals.oconner_formula_on') {
+        globals.oconner_formula_on = value;
+      }
+      else if(key == 'globals.wathen_formula_on') {
+        globals.wathen_formula_on = value;
+      }
     });
   }
 
@@ -62,9 +92,9 @@ class _AppSettingsState extends State<AppSettings> {
           ),
           CheckboxListTile(
               title: const Text('Epley Formula'),
-              onChanged: (bool? value) {
+              onChanged: (value) {
                 setState(() {
-                  globals.epley_formula_on = value!;
+                  _updatePreferences('globals.epley_formula_on', value!);
                 });
               },
             value: globals.epley_formula_on,
@@ -74,7 +104,7 @@ class _AppSettingsState extends State<AppSettings> {
             title: const Text('Brzycki Formula'),
             onChanged: (bool? value) {
               setState(() {
-                globals.brzycki_formula_on = value!;
+                _updatePreferences('globals.brzycki_formula_on', value!);
               });
             },
             value: globals.brzycki_formula_on,
@@ -84,7 +114,7 @@ class _AppSettingsState extends State<AppSettings> {
             title: const Text('Landers Formula'),
             onChanged: (bool? value) {
               setState(() {
-                globals.landers_formula_on = value!;
+                _updatePreferences('globals.landers_formula_on', value!);
               });
             },
             value: globals.landers_formula_on,
@@ -94,7 +124,7 @@ class _AppSettingsState extends State<AppSettings> {
             title: const Text('Lombardi Formula'),
             onChanged: (bool? value) {
               setState(() {
-                globals.lombardi_formula_on = value!;
+                _updatePreferences('globals.lombardi_formula_on', value!);
               });
             },
             value: globals.lombardi_formula_on,
@@ -104,7 +134,7 @@ class _AppSettingsState extends State<AppSettings> {
             title: const Text('Mayhew Formula'),
             onChanged: (bool? value) {
               setState(() {
-                globals.mayhew_formula_on = value!;
+                _updatePreferences('globals.mayhew_formula_on', value!);
               });
             },
             value: globals.mayhew_formula_on,
@@ -114,7 +144,7 @@ class _AppSettingsState extends State<AppSettings> {
             title: const Text('O\'Conner Formula'),
             onChanged: (bool? value) {
               setState(() {
-                globals.oconner_formula_on = value!;
+                _updatePreferences('globals.oconner_formula_on', value!);
               });
             },
             value: globals.oconner_formula_on,
@@ -124,7 +154,7 @@ class _AppSettingsState extends State<AppSettings> {
             title: const Text('Wathen Formula'),
             onChanged: (bool? value) {
               setState(() {
-                globals.wathen_formula_on = value!;
+                _updatePreferences('globals.wathen_formula_on', value!);
               });
             },
             value: globals.wathen_formula_on,
