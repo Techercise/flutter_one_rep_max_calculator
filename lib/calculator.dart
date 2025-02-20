@@ -169,20 +169,6 @@ class _CalculatorState extends State<Calculator> {
       _clicked = true;
     });
 
-    // if (globals.ORMFormulasUsed.isEmpty && weightFieldText.text != '' && repsFieldText.text != '')
-    // {
-    //   final scaffold = ScaffoldMessenger.of(context);
-    //   scaffold.showSnackBar(SnackBar(
-    //     backgroundColor: Colors.red,
-    //     content: const Text('Enable at least one formula to perform the calculation'),
-    //     action: SnackBarAction(
-    //       textColor: Colors.white,
-    //       label: 'OK',
-    //       onPressed: scaffold.hideCurrentSnackBar,
-    //     ),
-    //   ));
-    // }
-
     if ((weightFieldText.text == '') && (repsFieldText.text == '')) {
       final scaffold = ScaffoldMessenger.of(context);
       scaffold.showSnackBar(SnackBar(
