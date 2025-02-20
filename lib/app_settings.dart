@@ -63,10 +63,43 @@ class _AppSettingsState extends State<AppSettings> {
     });
   }
 
+  bool isOneFormulaTrue() {
+    bool one_formula_true = false;
+    if(globals.epley_formula_on || globals.brzycki_formula_on || globals.landers_formula_on || globals.lombardi_formula_on || globals.mayhew_formula_on || globals.oconner_formula_on || globals.wathen_formula_on)
+      {
+        one_formula_true = true;
+      }
+    return one_formula_true;
+  }
+
+  void ensureOneFormulaIsChecked() {
+    bool at_least_one_formula_on = isOneFormulaTrue();
+    if (!at_least_one_formula_on)
+      {
+        final scaffold = ScaffoldMessenger.of(context);
+        scaffold.showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: const Text('At least one formula must be checked to calculate a one rep max!'),
+          action: SnackBarAction(
+            textColor: Colors.white,
+            label: 'OK',
+            onPressed: scaffold.hideCurrentSnackBar,
+          ),
+        ));
+      }
+    else
+      {
+        Navigator.pop(context, true);
+      }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: ensureOneFormulaIsChecked,
+            icon: Icon(Icons.arrow_back)),
         backgroundColor: const Color(0xff00c853),
         title: const Text('Settings'),
       ),

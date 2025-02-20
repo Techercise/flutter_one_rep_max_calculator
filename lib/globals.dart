@@ -6,3 +6,4 @@ bool lombardi_formula_on = true;
 bool mayhew_formula_on = true;
 bool oconner_formula_on = true;
 bool wathen_formula_on = true;
+List ORMFormulasUsed = [];
