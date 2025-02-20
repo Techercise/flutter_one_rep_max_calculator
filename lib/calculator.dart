@@ -94,12 +94,6 @@ class _CalculatorState extends State<Calculator> {
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: Color(0xff5A5A5A))
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Color(0xff5A5A5A))
-                                  ),
-                                  border: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Color(0xff5A5A5A))
-                                  )
                                 ),
                                 keyboardType: TextInputType.number,
                                 controller: weightFieldText,
@@ -123,7 +117,8 @@ class _CalculatorState extends State<Calculator> {
                             child: TextField(
                               obscureText: false,
                               decoration: const InputDecoration(
-                                  border: UnderlineInputBorder()),
+                                  border: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: Color(0xff5A5A5A)))),
                               keyboardType: TextInputType.number,
                               controller: repsFieldText,
                             ),
@@ -169,15 +164,30 @@ class _CalculatorState extends State<Calculator> {
   }
 
   void calculateProjectedOneRepMax() {
+
     setState(() {
       _clicked = true;
     });
+
+    // if (globals.ORMFormulasUsed.isEmpty && weightFieldText.text != '' && repsFieldText.text != '')
+    // {
+    //   final scaffold = ScaffoldMessenger.of(context);
+    //   scaffold.showSnackBar(SnackBar(
+    //     backgroundColor: Colors.red,
+    //     content: const Text('Enable at least one formula to perform the calculation'),
+    //     action: SnackBarAction(
+    //       textColor: Colors.white,
+    //       label: 'OK',
+    //       onPressed: scaffold.hideCurrentSnackBar,
+    //     ),
+    //   ));
+    // }
 
     if ((weightFieldText.text == '') && (repsFieldText.text == '')) {
       final scaffold = ScaffoldMessenger.of(context);
       scaffold.showSnackBar(SnackBar(
         backgroundColor: Colors.red,
-        content: const Text('Enter reps and weight to get a projected max'),
+        content: const Text('Enter reps and weight to get a projected one rep max'),
         action: SnackBarAction(
           textColor: Colors.white,
           label: 'OK',
@@ -233,36 +243,37 @@ class _CalculatorState extends State<Calculator> {
   String averageORMCalculation()
   {
     projectedORM = '';
-    List ORMFormulasUsed = [];
     weightLifted = int.parse(weightFieldText.text);
     repsPerformed = int.parse(repsFieldText.text);
+
+    double avgORM = 0;
 
     if (globals.epley_formula_on)
     {
       // Epley Formula
       double epleyORM = weightLifted * (1 + (repsPerformed / 30));
-      ORMFormulasUsed.add(epleyORM);
+      globals.ORMFormulasUsed.add(epleyORM);
     }
 
     if (globals.brzycki_formula_on)
     {
       // Brzycki Formula
       double brzyckiORM = weightLifted * (36 / (37 - repsPerformed));
-      ORMFormulasUsed.add(brzyckiORM);
+      globals.ORMFormulasUsed.add(brzyckiORM);
     }
 
     if (globals.landers_formula_on)
     {
       // Landers Formula
       double landersORM = weightLifted / (1.013 - (0.0267123 * repsPerformed));
-      ORMFormulasUsed.add(landersORM);
+      globals.ORMFormulasUsed.add(landersORM);
     }
 
     if (globals.lombardi_formula_on)
     {
       // Lombardi Formula
       num lombardiORM = weightLifted * pow(repsPerformed, 0.1);
-      ORMFormulasUsed.add(lombardiORM);
+      globals.ORMFormulasUsed.add(lombardiORM);
     }
 
     if (globals.mayhew_formula_on)
@@ -270,14 +281,14 @@ class _CalculatorState extends State<Calculator> {
       // Mayhew Formula
       double mayhewORM =
           weightLifted / (0.522 + (0.419 * pow(e, (-0.055 * repsPerformed))));
-      ORMFormulasUsed.add(mayhewORM);
+      globals.ORMFormulasUsed.add(mayhewORM);
     }
 
     if (globals.oconner_formula_on)
     {
       // O'Conner Formula
       double oconnerORM = weightLifted * (1 + (0.025 * repsPerformed));
-      ORMFormulasUsed.add(oconnerORM);
+      globals.ORMFormulasUsed.add(oconnerORM);
     }
 
     if (globals.wathen_formula_on)
@@ -285,17 +296,15 @@ class _CalculatorState extends State<Calculator> {
       // Wathen Formula
       double wathenORM = weightLifted /
           (0.4880 + (0.538 * (pow(e, (-0.075 * repsPerformed)))));
-      ORMFormulasUsed.add(wathenORM);
+      globals.ORMFormulasUsed.add(wathenORM);
     }
 
-    double avgORM = 0;
-
-    for(int i = 0; i < ORMFormulasUsed.length; i++)
+    for(int i = 0; i < globals.ORMFormulasUsed.length; i++)
       {
-        avgORM = avgORM + ORMFormulasUsed[i];
+        avgORM = avgORM + globals.ORMFormulasUsed[i];
       }
 
-    avgORM /= ORMFormulasUsed.length;
+    avgORM /= globals.ORMFormulasUsed.length;
 
     if (globals.kg_unit_of_measure == true)
     {
